@@ -1,28 +1,34 @@
-const btnAdd = document.getElementById('taskButton')
-const inputTask = document.getElementById('taskInput')
-const taskList = document.getElementById('taskList')
+const buttonAddTask = document.getElementById("addTask")
+const inputTask = document.getElementById("taskInput")
+const listTask = document.getElementById("taskList")
 
-console.log(btnAdd)
+console.log(buttonAddTask)
 console.log(inputTask)
-console.log(taskList)
+console.log(listTask)
 
-list = []
+list = JSON.parse(localStorage.getItem('tasks')) || [];
 
 function addTask(item){
     list.push(item)
-    renderList()
+    salveTaskLocalStorage()
+    renderTaskList()
 }
 
 function removeTask(index){
     list.splice(index, 1)
-    renderList()
+    salveTaskLocalStorage()
+    renderTaskList()
 }
 
-function renderList(){
-    taskList.innerHTML = '';
+function salveTaskLocalStorage(){
+    localStorage.setItem('tasks', JSON.stringify(list))
+}
+
+function renderTaskList(){
+    listTask.innerHTML = ''
     list.forEach((task, index)=> {
         const li = document.createElement('li')
-        
+
         const taskText = document.createElement('span')
         taskText.textContent = task
 
@@ -32,17 +38,20 @@ function renderList(){
         excluir.addEventListener('click', ()=> {
             removeTask(index)
         })
-
         li.appendChild(taskText)
         li.appendChild(excluir)
-        taskList.appendChild(li)
+        listTask.appendChild(li)
     })
 }
 
-btnAdd.addEventListener('click', ()=> {
+buttonAddTask.addEventListener('click', ()=> {
     const task = inputTask.value
-    if(task !== ''){
+    if(task === ''){
+        return;
+    }else {
         addTask(task)
-        inputTask.value = '';
+        inputTask.value = ''
     }
 })
+
+renderTaskList()
