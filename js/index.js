@@ -25,6 +25,11 @@ function salveTaskLocalStorage(){
     localStorage.setItem('tasks', JSON.stringify(list))
 }
 
+function toggleTaskCompletion(event) {
+    const li = event.target.closest('li');
+    li.classList.toggle('border-green');
+}
+
 function renderTaskList(){
     listTask.innerHTML = ''
     list.forEach((task, index)=> {
@@ -42,6 +47,7 @@ function renderTaskList(){
         li.appendChild(taskText)
         li.appendChild(excluir)
         listTask.appendChild(li)
+        li.addEventListener('click', toggleTaskCompletion)
     })
 }
 
