@@ -6,6 +6,7 @@ console.log(buttonAddTask)
 console.log(inputTask)
 console.log(listTask)
 
+
 list = JSON.parse(localStorage.getItem('tasks')) || [];
 
 function addTask(item){
